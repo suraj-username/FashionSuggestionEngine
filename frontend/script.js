@@ -1,5 +1,11 @@
 // frontend/script.js
 
+// When chat icon is clicked, redirect to the chat page or open chat functionality
+document.querySelector('.chat-icon').addEventListener('click', () => {
+    window.location.href = './old_index.html'; // Or open your chat interface here
+  });
+  
+
 async function submitSearch() {
     const textInput = document.getElementById('textInput').value;
     const imageInput = document.getElementById('imageInput').files[0];
@@ -78,7 +84,17 @@ async function reverseImageSearch(imageUrl) {
 
 function displayEcommerceLinks(links) {
     const reverseSearchContainer = document.getElementById('reverseSearchContainer');
+    const reverseResultsHeading = document.getElementById('reverseResultsHeading');
+
     reverseSearchContainer.innerHTML = ''; // Clear previous reverse search results
+
+    if (links && links.length > 0) {
+        // Show the heading only if there are links
+        reverseResultsHeading.style.display = 'block';
+    } else {
+        // Hide the heading if there are no links
+        reverseResultsHeading.style.display = 'none';
+    }
 
     links.forEach(link => {
         const linkItem = document.createElement('div');

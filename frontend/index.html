@@ -1,49 +1,40 @@
-<!-- frontend/index.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fashion Product Search</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Discover Your Style</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="container">
-        <h1>Fashion Product Finder</h1>
-        <form id="searchForm">
-            <label for="textInput">Search by text:</label>
-            <input type="text" id="textInput" name="textInput" placeholder="Enter product description...">
-            
-            <label for="imageInput">or Search by image:</label>
-            <input type="file" id="imageInput" name="imageInput" accept="image/*">
-            
-            <button type="button" onclick="submitSearch()">Search</button>
-        </form>
-        
-        <div id="resultsContainer">
-            <!-- Initial search results will be displayed here -->
-        </div>
-        
-        <h2>Reverse Image Search Results</h2>
-        <div id="reverseSearchContainer">
-            <!-- Reverse image search results will be displayed here -->
-        </div>
-        
-        <div class="loader loader--style2" title="1">
-            <svg version="1.1" id="loader-1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-               width="40px" height="40px" viewBox="0 0 50 50" style="enable-background:new 0 0 50 50;" xml:space="preserve">
-            <path fill="#000" d="M25.251,6.461c-10.318,0-18.683,8.365-18.683,18.683h4.068c0-8.071,6.543-14.615,14.615-14.615V6.461z">
-              <animateTransform attributeType="xml"
-                attributeName="transform"
-                type="rotate"
-                from="0 25 25"
-                to="360 25 25"
-                dur="0.6s"
-                repeatCount="indefinite"/>
-              </path>
-            </svg>
-          </div>
+  <!-- Header Section -->
+  <header>
+    <div class="logo">TrendFusion</div>
+  </header>
+
+  <div class="background"></div> <!-- Background container -->
+
+  <!-- Main Content Section -->
+  <main>
+    <h1 class="typing-text">Discover your style with Trendfusion</h1>
+    <div class="image-gallery">
+      <div class="image-card">
+        <img src="img1.png" alt="Fashion Image 1">
+      </div>
+      <div class="image-card">
+        <img src="img2.png" alt="Fashion Image 2">
+      </div>
+      <div class="image-card">
+        <img src="img3.png" alt="Fashion Image 3">
+      </div>
     </div>
-    <script src="script.js"></script>
+  </main>
+
+  <!-- Chat Icon Section -->
+  <div class="chat-icon">
+    <img src="chat-icon.png" alt="Chat Icon">
+  </div>
+
+  <script src="script.js"></script>
 </body>
 </html>

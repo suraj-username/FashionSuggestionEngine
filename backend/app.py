@@ -16,7 +16,7 @@ model = CLIPModel.from_pretrained("openai/clip-vit-base-patch32")
 processor = CLIPProcessor.from_pretrained("openai/clip-vit-base-patch32")
 
 # Connect to the Lancedb database and load the table once
-db = lancedb.connect("./my_lancedb")
+db = lancedb.connect("./my_lancedb_new")
 table_name = "my_table"
 tbl = db.open_table(table_name)  # Load the table once
 

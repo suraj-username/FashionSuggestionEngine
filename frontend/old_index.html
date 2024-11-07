@@ -1,4 +1,3 @@
-<!-- frontend/index.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,42 +7,40 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="container">
-        <h1>Fashion Product Finder</h1>
-        <form id="searchForm">
-            <label for="textInput">Search by text:</label>
-            <input type="text" id="textInput" name="textInput" placeholder="Enter product description...">
-            
-            <label for="imageInput">or Search by image:</label>
-            <input type="file" id="imageInput" name="imageInput" accept="image/*">
-            
-            <button type="button" onclick="submitSearch()">Search</button>
-        </form>
+    <header>
+        <h1 class="typing-text">Fashion Product Finder</h1>
+    </header>
+    <main>
+        <div class="search-container">
+            <form id="searchForm">
+                <label for="textInput">Search by text:</label>
+                <input type="text" id="textInput" name="textInput" placeholder="Enter product description...">
+                
+                <label for="imageInput">or Search by image:</label>
+                <input type="file" id="imageInput" name="imageInput" accept="image/*">
+                
+                <button type="button" class="search-button" onclick="submitSearch()">Search</button>
+            </form>
+        </div>
         
-        <div id="resultsContainer">
+        <section id="resultsContainer" class="results-section">
             <!-- Initial search results will be displayed here -->
-        </div>
+        </section>
         
-        <h2>Reverse Image Search Results</h2>
-        <div id="reverseSearchContainer">
+        <h2 id="reverseResultsHeading" class="results-heading" style="display: none;">Reverse Image Search Results</h2>
+        <section id="reverseSearchContainer" class="results-section">
             <!-- Reverse image search results will be displayed here -->
-        </div>
+        </section>
         
         <div class="loader loader--style2" title="1">
             <svg version="1.1" id="loader-1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-               width="40px" height="40px" viewBox="0 0 50 50" style="enable-background:new 0 0 50 50;" xml:space="preserve">
-            <path fill="#000" d="M25.251,6.461c-10.318,0-18.683,8.365-18.683,18.683h4.068c0-8.071,6.543-14.615,14.615-14.615V6.461z">
-              <animateTransform attributeType="xml"
-                attributeName="transform"
-                type="rotate"
-                from="0 25 25"
-                to="360 25 25"
-                dur="0.6s"
-                repeatCount="indefinite"/>
-              </path>
+                 width="40px" height="40px" viewBox="0 0 50 50" style="enable-background:new 0 0 50 50;" xml:space="preserve">
+                <path fill="#FF6700" d="M25.251,6.461c-10.318,0-18.683,8.365-18.683,18.683h4.068c0-8.071,6.543-14.615,14.615-14.615V6.461z">
+                    <animateTransform attributeType="xml" attributeName="transform" type="rotate" from="0 25 25" to="360 25 25" dur="0.6s" repeatCount="indefinite"/>
+                </path>
             </svg>
-          </div>
-    </div>
+        </div>
+    </main>
     <script src="script.js"></script>
 </body>
 </html>
