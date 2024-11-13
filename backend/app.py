@@ -39,7 +39,7 @@ def embedding_from_image(image):
     image_vector = model.get_image_features(**inputs)
     return image_vector[0].detach().numpy()
 
-def search_lancedb(query_vector, nprobes=100, limit=100):
+def search_lancedb(query_vector, nprobes=100000, limit=100000):
     results = tbl.search(query_vector).metric('cosine').nprobes(nprobes).limit(limit).to_pandas()
     results['cosine_similarity'] = results.apply(lambda row: cosine_similarity(query_vector, row['vector']), axis=1)
     sorted_results = results.sort_values(by='cosine_similarity', ascending=False).head(10)
