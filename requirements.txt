@@ -1,10 +1,9 @@
 waitress
-selenium
 flask
 Flask-Cors
 torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu118
-lanced
+lancedb
 transformers
 openai-clip
 requests
-pandasp
+pandas
