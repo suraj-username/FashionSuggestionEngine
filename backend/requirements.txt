@@ -8,3 +8,4 @@ transformers
 openai-clip
 requests
 pandas
+google_image_source_search
