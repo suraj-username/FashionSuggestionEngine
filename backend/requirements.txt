@@ -1,0 +1,10 @@
+waitress
+flask
+Flask-Cors
+torch
+torchvision
+lancedb
+transformers
+openai-clip
+requests
+pandas
