@@ -1,7 +1,8 @@
 waitress
 flask
 Flask-Cors
-torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu118
+torch
+torchvision
 lancedb
 transformers
 openai-clip
