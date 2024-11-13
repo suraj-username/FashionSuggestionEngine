@@ -72,7 +72,7 @@ body {
         border-right-color: transparent;
     }
     100% {
-        border-right-color: tranasparent; /* Cursor disappears */
+        border-right-color: tranasparent;
     }
 }
 
@@ -81,13 +81,13 @@ body {
     font-size: 3.5rem;
     font-weight: bold;
     color: #2e2e2d;
-    white-space: nowrap; /* Prevent text wrapping */
-    overflow: hidden; /* Hide the overflowing text */
-    border-right: 4px solid; /* Add the cursor */
-    width: 0; /* Initial width set to 0 */
+    white-space: nowrap;
+    overflow: hidden;
+    border-right: 4px solid;
+    width: 0;
     animation: 
-        typing 5s steps(40, end) forwards, /* Typing animation */
-        blink-cursor 0.75s steps(40) infinite; /* Blinking cursor animation */
+        typing 5s steps(40, end) forwards,
+        blink-cursor 0.75s steps(40) infinite;
     margin: 50px auto;
     display: inline-block;
     text-align: center;

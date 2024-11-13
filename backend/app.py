@@ -1,24 +1,33 @@
+#imports
 from flask import Flask, jsonify, request
 from flask_cors import CORS
 from transformers import CLIPProcessor, CLIPModel
 from PIL import Image
 import lancedb
 import os
-
-# Include the reverse image search related imports
 from google_img_source_search import ReverseImageSearcher
+import numpy as np
 
 app = Flask(__name__)
 CORS(app)
 
-# Load the CLIP model and processor for embedding generation
+# Loading the CLIP model
 model = CLIPModel.from_pretrained("openai/clip-vit-base-patch32")
 processor = CLIPProcessor.from_pretrained("openai/clip-vit-base-patch32")
 
-# Connect to the Lancedb database and load the table once
+# Connecting to the database
 db = lancedb.connect("./my_lancedb_new")
 table_name = "my_table"
-tbl = db.open_table(table_name)  # Load the table once
+tbl = db.open_table(table_name)
+
+def cosine_similarity(vector1, vector2):
+    """
+    Calculate the cosine similarity between two vectors.
+    """
+    dot_product = np.dot(vector1, vector2)
+    norm_vector1 = np.linalg.norm(vector1)
+    norm_vector2 = np.linalg.norm(vector2)
+    return dot_product / (norm_vector1 * norm_vector2)
 
 def embedding_from_text(query):
     text_inputs = processor(text=query, return_tensors="pt", truncation=True)
@@ -30,10 +39,13 @@ def embedding_from_image(image):
     image_vector = model.get_image_features(**inputs)
     return image_vector[0].detach().numpy()
 
-def search_lancedb(query_vector):
-    # Query Lancedb with cosine similarity metric and limit results to top 10
-    results = tbl.search(query_vector).metric('cosine').nprobes(10).limit(10).to_pandas()
-    return results
+def search_lancedb(query_vector, nprobes=100, limit=100):
+    results = tbl.search(query_vector).metric('cosine').nprobes(nprobes).limit(limit).to_pandas()
+    results['cosine_similarity'] = results.apply(lambda row: cosine_similarity(query_vector, row['vector']), axis=1)
+    sorted_results = results.sort_values(by='cosine_similarity', ascending=False).head(10)
+    return sorted_results
+
+
 
 @app.route('/search', methods=['POST'])
 def search():
@@ -41,7 +53,7 @@ def search():
     text_input = data.get('textInput')
     image_file = request.files.get('imageInput')
     
-    # Generate the embedding based on text or image input
+    # Generating embedding of user input (Text and image)
     if text_input:
         query_vector = embedding_from_text(text_input)
     elif image_file:
@@ -50,10 +62,9 @@ def search():
     else:
         return jsonify({'error': 'No valid input provided'}), 400
 
-    # Query the Lancedb and get the top 10 results
+    # Getting 10 results from the lancedb vector database
     results = search_lancedb(query_vector)
 
-    # Format results for JSON response
     formatted_results = []
     for index, row in results.iterrows():
         formatted_results.append({
@@ -65,11 +76,11 @@ def search():
 # Reverse image search endpoint
 @app.route('/reverse-search', methods=['POST'])
 def reverse_search():
-    data = request.get_json()  # Get the JSON data
+    data = request.get_json()
     if data is None:
-        return jsonify({'error': 'No data provided'}), 400  # Handle case where no JSON is provided
+        return jsonify({'error': 'No data provided'}), 400 
 
-    image_url = data.get('image_url')  # Retrieve the image URL from the incoming JSON
+    image_url = data.get('image_url')
     list_of_links = get_ecommerce_links(image_url)
     
     # Prepare response with links
@@ -81,7 +92,7 @@ def reverse_search():
             'image_url': link.image_url
         })
     
-    return jsonify({'links': formatted_links})  # Return the result as a JSON response
+    return jsonify({'links': formatted_links})
 
 def get_ecommerce_links(image_url):
     """
@@ -89,7 +100,7 @@ def get_ecommerce_links(image_url):
     """
     rev_img_searcher = ReverseImageSearcher()
     res = rev_img_searcher.search(image_url)
-    return res[:10]  # Return only the top 10 results
+    return res[:10] #10 results
 
 if __name__ == '__main__':
     from waitress import serve
